@@ -45,7 +45,9 @@ class MLR:
 
     def final_columns(self):
         self.df.drop(['SOP', 'LOR ', 'University Rating', 'Research'], axis=1, inplace=True)
-        print(self.df.head())
+        global ReqData
+        ReqData=self.df
+        
 
     def run_all(self): #we can see that as gre increases, toefl increases too.
         self.read_data()
