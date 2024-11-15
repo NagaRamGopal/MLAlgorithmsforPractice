@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import pandas_profiling
 from pandas_profiling import ProfileReport
-
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -28,12 +27,20 @@ class MLR:
          #we can see chance of admit is highly corelated to gre, toefl scores and @same time those who got gre more=toefl more
 
     def bivariate_analysis(self):
-        sns.scatterplot(x=self.df['GRE Score'],y=self.df['TOEFL Score'])
-        plt.show()
-        sns.scatterplot(x=self.df['GRE Score'],y=self.df['CGPA'])
-        plt.show()
-        sns.scatterplot(x=self.df['CGPA'],y=self.df['TOEFL Score'])
-        plt.show()
+      plt.figure()
+      sns.scatterplot(x=self.df['GRE Score'], y=self.df['TOEFL Score'])
+      plt.title('GRE vs TOEFL Score')
+      plt.show()
+
+      plt.figure()
+      sns.scatterplot(x=self.df['GRE Score'], y=self.df['CGPA'])
+      plt.title('GRE vs CGPA')
+      plt.show()
+
+      plt.figure()
+      sns.scatterplot(x=self.df['TOEFL Score'], y=self.df['CGPA'])
+      plt.title('TOEFL Score vs CGPA')
+      plt.show()
 
 
     def run_all(self): #we can see that as gre increases, toefl increases too.
