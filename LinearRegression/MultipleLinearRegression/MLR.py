@@ -45,7 +45,10 @@ class MLR:
 
     def final_columns(self):
         self.df.drop(['SOP', 'LOR ', 'University Rating', 'Research'], axis=1, inplace=True)
+        print(self.df.columns)
         global ReqData
+        self.df.columns = self.df.columns.str.strip()  #to remove space at the end. 
+        print(self.df.columns)
         ReqData=self.df
         
 
