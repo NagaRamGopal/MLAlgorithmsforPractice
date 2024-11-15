@@ -3,10 +3,13 @@ import numpy as np
 import pandas_profiling
 from pandas_profiling import ProfileReport
 
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 class MLR:
     def read_data(self):
         try:
-            self.df=pd.read_csv(r'C:\Users\ramgo\OneDrive\Desktop\LinearRegressionPractice\MultipleLinearRegression\jamboree_dataset.csv')
+            self.df=pd.read_csv(r'C:\Users\ramgo\OneDrive\Desktop\Learn\MLAlgorithmsforPractice\LinearRegression\MultipleLinearRegression\jamboree_dataset.csv')
             #print(self.df.head())
         except:
             print("Data Loading error")
@@ -19,16 +22,27 @@ class MLR:
     def cleaning_data(self):   #From report we can see no duplicates, no missing values. 
         self.df.drop(['Serial No.'],axis=1,inplace=True)
         #print(self.df.head())
+        print(self.df.corr())
+        sns.heatmap(self.df.corr(),cmap='coolwarm')
+        plt.title('Correlation')
+         #we can see chance of admit is highly corelated to gre, toefl scores and @same time those who got gre more=toefl more
+
+    def bivariate_analysis(self):
+        sns.scatterplot(x=self.df['GRE Score'],y=self.df['TOEFL Score'])
+        plt.show()
+        sns.scatterplot(x=self.df['GRE Score'],y=self.df['CGPA'])
+        plt.show()
+        sns.scatterplot(x=self.df['CGPA'],y=self.df['TOEFL Score'])
+        plt.show()
 
 
-    def data_visualization(self):
-        pass
-
-    def run_all(self):
+    def run_all(self): #we can see that as gre increases, toefl increases too.
         self.read_data()
         #self.statistics_data()
         self.cleaning_data()
-        self.data_visualization()
+        self.bivariate_analysis()
+
+        
 
 
 o1=MLR()
