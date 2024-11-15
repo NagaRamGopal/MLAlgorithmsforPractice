@@ -43,11 +43,16 @@ class MLR:
       plt.show()
 
 
+    def final_columns(self):
+        self.df.drop(['SOP', 'LOR ', 'University Rating', 'Research'], axis=1, inplace=True)
+        print(self.df.head())
+
     def run_all(self): #we can see that as gre increases, toefl increases too.
         self.read_data()
         #self.statistics_data()
         self.cleaning_data()
-        self.bivariate_analysis()
+        #self.bivariate_analysis()
+        self.final_columns()
 
         
 
