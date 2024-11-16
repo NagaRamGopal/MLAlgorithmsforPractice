@@ -9,7 +9,6 @@ class MLR:
     def read_data(self):
         try:
             self.df=pd.read_csv(r'C:\Users\ramgo\OneDrive\Desktop\Learn\MLAlgorithmsforPractice\LinearRegression\MultipleLinearRegression\jamboree_dataset.csv')
-            #print(self.df.head())
         except:
             print("Data Loading error")
 
@@ -20,7 +19,6 @@ class MLR:
         
     def cleaning_data(self):   #From report we can see no duplicates, no missing values. 
         self.df.drop(['Serial No.'],axis=1,inplace=True)
-        #print(self.df.head())
         print(self.df.corr())
         sns.heatmap(self.df.corr(),cmap='coolwarm')
         plt.title('Correlation')
@@ -54,9 +52,9 @@ class MLR:
 
     def run_all(self): #we can see that as gre increases, toefl increases too.
         self.read_data()
-        #self.statistics_data()
+        self.statistics_data()
         self.cleaning_data()
-        #self.bivariate_analysis()
+        self.bivariate_analysis()
         self.final_columns()
 
         
