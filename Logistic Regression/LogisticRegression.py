@@ -3,6 +3,7 @@ import numpy as np
 import pandas_profiling
 from pandas_profiling import ProfileReport
 import matplotlib.pyplot as plt
+import seaborn as sns
 import sys
 
 
@@ -31,13 +32,22 @@ class LR:
         #print(LR.df[LR.df.duplicated()]) #repeated rows
         print(LR.df.duplicated().sum())
         LR.df.drop_duplicates(inplace=True)
+        print(LR.df.head())
         #print(LR.df.duplicated().sum()) #cross checking again to see repeated rows are left.
+        #print(LR.df.isnull().sum())  #checking any missing values.
 
-        
+    @staticmethod
+    def outliers_detection():
+        col=LR.df[['Age','Experience','Income','CCAvg']]
+        for c in col:
+            plt.figure(figsize=(6,4))
+            sns.boxplot(x=LR.df[c])
+            plt.title(f"Boxplot for {c}")
+            plt.show()
     
     @staticmethod
-    def column_analysis():
-        pass
+    def statistics_check():
+        print(LR.df['Age'].mean().round(), LR.df['Age'].median().round(), LR.df['Age'].mode().round())
 
 
     @staticmethod
@@ -45,7 +55,8 @@ class LR:
         LR.read_data()
         #LR.data_report()
         LR.cleaning_data()
-
+        LR.outliers_detection()
+        LR.statistics_check()
     
 
 
