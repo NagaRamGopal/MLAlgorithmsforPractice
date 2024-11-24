@@ -38,26 +38,64 @@ class LR:
 
     @staticmethod
     def outliers_detection():
-        col=LR.df[['Age','Experience','Income','CCAvg']]
+        col=LR.df.columns
         for c in col:
             plt.figure(figsize=(6,4))
             sns.boxplot(x=LR.df[c])
             plt.title(f"Boxplot for {c}")
-            plt.show()
+            plt.show() #we can see outliers for income, mortgage and ccavg columns
     
     @staticmethod
-    def statistics_check():
-        print(LR.df['Age'].mean().round(), LR.df['Age'].median().round(), LR.df['Age'].mode().round())
+    def handling_outliers():
+        col_req=LR.df[['Income', 'CCAvg', 'Mortgage']]
+        for i in col_req:
+            Q1=LR.df[i].quantile(0.25)
+            Q3=LR.df[i].quantile(0.75)
+            IQR=Q3-Q1
+            lower_bound = Q1 - 1.5 * IQR  # Lower bound for outliers
+            upper_bound = Q3 + 1.5 * IQR  # Upper bound for outliers
+            LR.df = LR.df[(LR.df[i] >= lower_bound) & (LR.df[i] <= upper_bound)]
+        LR.df.dropna(inplace=True)
+        print(LR.df.shape)
+    
+    
+    @staticmethod
+    def skewness_check():
+        skewcol=LR.df[['Income','CCAvg','Mortgage']]
+        skewness = skewcol.skew()
+        print("skewness before", skewness) #we see we are having +ve skewness
+        
+    
+    @staticmethod
+    def handling_skewness():
+        skewcol=['Income','CCAvg','Mortgage']
+        for i in skewcol:
+            LR.df[i]=np.sqrt(LR.df[i])
+        after_handle_skewness=LR.df[skewcol].skew()
+        print("Handled skewness with Square Root Transformation ",after_handle_skewness)
+        #LR.df['Mortgage'] = np.log1p(LR.df['Mortgage']) 
+        #print("Updated Mortgage Skewness:", LR.df['Mortgage'].skew())
+
+    @staticmethod
+    def correlation():
+        plt.figure(figsize=(12,4))
+        sns.heatmap(LR.df.corr(),annot=True)
+        plt.show()
+        #print(LR.df.corr())
+
+
 
 
     @staticmethod
     def run_all():
         LR.read_data()
-        #LR.data_report()
+        LR.data_report()
         LR.cleaning_data()
         LR.outliers_detection()
-        LR.statistics_check()
-    
+        LR.handling_outliers()
+        LR.skewness_check()
+        LR.handling_skewness()
+        LR.correlation()
 
 
 obj1=LR()
